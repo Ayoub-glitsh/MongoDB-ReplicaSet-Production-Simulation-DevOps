@@ -585,25 +585,34 @@ No Heartbeat Response]
 
   
 
-### Technical Explanation
+### 🛠️ Technical Explanation – Automatic Failover
 
-MongoDB implements automatic failover through the Raft consensus algorithm:
+MongoDB implements **automatic failover** through the **Raft consensus algorithm**, ensuring high availability:
 
-1. **Heartbeat Monitoring**: All nodes exchange heartbeats every 2 seconds
+1. **💓 Heartbeat Monitoring**  
+   - All nodes exchange **heartbeats every 2 seconds** to monitor cluster health  
 
-2. **Failure Detection**: If secondaries don't receive heartbeat from primary within 10 seconds, they initiate election
+2. **⚠️ Failure Detection**  
+   - If **Secondaries** don't receive a heartbeat from the **Primary** within **10 seconds**, they initiate an **election**  
 
-3. **Election Process**:
+3. **🏁 Election Process**  
+   - **Eligible Secondaries** (priority > 0, not hidden, up-to-date oplog) campaign to become **Primary**  
+   - Nodes **vote** based on election criteria:  
+     - Priority  
+     - Data freshness  
+     - Network connectivity  
+   - Candidate requires **majority vote** (`n/2 + 1`) to be elected  
 
-   - Eligible secondaries (priority > 0, not hidden, up-to-date oplog) campaign to become primary
+4. **🌟 New Primary**  
+   - The **elected node transitions to Primary**  
+   - Resumes **replication** to remaining Secondaries  
 
-   - Nodes vote based on election criteria (priority, data freshness, network connectivity)
+5. **🔄 Old Primary Recovery**  
+   - When a **failed node recovers**, it rejoins as a **Secondary**  
+   - Syncs **missing data** to catch up with the current Primary  
 
-   - Candidate needs majority vote (n/2 + 1) to become primary
+> ⚡ Automatic failover ensures **high availability**, **data consistency**, and **minimal downtime** in a MongoDB Replica Set.
 
-4. **New Primary**: Elected node transitions to primary, resumes replication to remaining secondaries
-
-5. **Old Primary Recovery**: When failed node recovers, it rejoins as secondary and syncs missing data
 
   
 
