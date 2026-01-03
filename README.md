@@ -166,7 +166,6 @@ Incorrect command:
 Result:
 
 *   Returns a **function reference**
-    
 *   No execution
     
 
@@ -178,7 +177,6 @@ Correct command:
 👉 This highlights the difference between:
 
 *   **Function reference**
-    
 *   **Function execution**
     
 
@@ -200,7 +198,6 @@ Result:
 ### 🔍 Interpretation
 
 *   The node on port 2717 was **down**
-    
 *   The Replica Set triggered an **automatic election**
     
 
@@ -212,17 +209,13 @@ Result:
 Connection to another node:
 
     mongosh --port 2727
-    
-
     rs.status()
     
 
 ### 🔍 Result
 
 *   `localhost:2727` becomes **PRIMARY**
-    
 *   `localhost:2717` becomes **SECONDARY**
-    
 *   `term` incremented (moved to `term: 2`)
     
 
@@ -251,7 +244,6 @@ Result:
 ### 🧠 Explanation
 
 *   **Write operations are forbidden** on Secondary nodes
-    
 *   Only the **Primary** accepts writes
     
 
@@ -313,15 +305,12 @@ Observed error:
 ### 🔍 Identified Cause
 
 *   MongoDB version **8.2**
-    
 *   Feature Compatibility Version:
     
-
+```bash
     db.system.version.find()
-    
-
     { version: "8.2" }
-    
+```   
 
 👉 Version is too recent → instability with some commands (`rs.status()`)
 
@@ -339,11 +328,8 @@ At startup:
 ### 🔐 Interpretation
 
 *   No authentication enabled
-    
 *   Access restricted to `localhost`
-    
 *   Acceptable for **simulation**
-    
 *   ❌ Not recommended for production
     
 
@@ -355,17 +341,11 @@ At startup:
 ### ✅ Validated Skills
 
 *   Replica Set setup
-    
 *   Dynamic node addition
-    
 *   `rs.status()` analysis
-    
 *   Election mechanism understanding
-    
 *   Handling `NotWritablePrimary` errors
-    
 *   Automatic data replication
-    
 *   BSON / FCV issue diagnostics
     
 
@@ -377,16 +357,11 @@ At startup:
 This simulation successfully reproduced a **production-like MongoDB environment**, demonstrating:
 
 *   Real Replica Set behavior
-    
 *   High availability
-    
 *   Write limitations
-    
 *   Automatic elections
-    
 *   Version-related errors
     
-
 It provides a **solid foundation** for backend, DevOps, and cloud projects.
 
 * * *
@@ -395,35 +370,17 @@ It provides a **solid foundation** for backend, DevOps, and cloud projects.
 ----------------------
 
 *   Enable authentication (`--auth`)
-    
 *   Add TLS/SSL
-    
 *   Downgrade FCV to 7.0
-    
 *   Dockerize the cluster
-    
 *   Add monitoring (Prometheus / MongoDB Compass)
     
 
-* * *
-
-If you want, I can now:
-
-*   ✅ Convert this into a **GitHub README**
-    
-*   ✅ Adapt it to **OFPPT / ISTA academic format**
-    
-*   ✅ Add **architecture diagrams**
-    
-*   ✅ Polish it as **enterprise-grade documentation**
-    
-
-Just tell me 🔥
 
 
 
+***
 
-==============================================================
 
 # MongoDB Replica Set Production Architecture
 
@@ -434,74 +391,44 @@ Just tell me 🔥
   
 
 ```mermaid
-
 graph TB
-
     subgraph "Application Layer"
-
         App[Client Application]
-
     end
-
     subgraph "MongoDB Replica Set: myReplicaSet"
-
         P[Primary Node
 localhost:2717]
-
         S1[Secondary Node 1
 localhost:2727]
-
         S2[Secondary Node 2
 localhost:2737]
-
     end
-
     subgraph "Data Storage"
-
         DP[(Primary Data
 Oplog)]
-
         DS1[(Secondary Data 1
 Replicated)]
-
         DS2[(Secondary Data 2
 Replicated)]
-
     end
-
     App -- "Write Operations
 Read/Write" --> P
-
     App -- "Read Operations
 (Optional)" --> S1
-
     App -- "Read Operations
 (Optional)" --> S2
-
     P -- "Heartbeat & Replication" --> S1
-
     P -- "Heartbeat & Replication" --> S2
-
     S1 -- "Heartbeat" --> S2
-
     P --- DP
-
     S1 --- DS1
-
     S2 --- DS2
-
     classDef primary fill:#e1f5fe,stroke:#0288d1,stroke-width:2px
-
     classDef secondary fill:#f3e5f5,stroke:#7b1fa2
-
     classDef storage fill:#e8f5e8,stroke:#2e7d32
-
     class P,DP primary
-
     class S1,DS1,S2,DS2 secondary
-
     class DP,DS1,DS2 storage
-
 ```
 
   
