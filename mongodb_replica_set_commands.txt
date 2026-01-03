@@ -1,0 +1,74 @@
+# MongoDB Replica Set Setup - Commands Reference
+
+## 1️⃣ Start MongoDB instances
+# Start three MongoDB servers on different ports
+mongod --port 2717 --dbpath ./data/rs1 --replSet myReplicaSet
+mongod --port 2727 --dbpath ./data/rs2 --replSet myReplicaSet
+mongod --port 2737 --dbpath ./data/rs3 --replSet myReplicaSet
+
+## 2️⃣ Connect to the first node (Primary initial)
+mongosh --port 2717
+
+## 3️⃣ Initialize the Replica Set
+rs.initiate()
+
+## 4️⃣ Check initial Replica Set status
+rs.status()
+
+## 5️⃣ Add secondary nodes
+rs.add("localhost:2727")
+rs.add("localhost:2737")
+
+## 6️⃣ Verify the cluster after adding nodes
+rs.status()
+
+## 7️⃣ Difference between rs.status reference vs call
+# Incorrect - just a function reference
+rs.status
+# Correct - executes the function
+rs.status()
+
+## 8️⃣ Simulate Primary failure (stop node on 2717)
+# Try to reconnect
+mongosh --port 2717
+# Result: MongoNetworkError: connect ECONNREFUSED
+
+## 9️⃣ Observe election of new Primary
+mongosh --port 2727
+rs.status()
+# New Primary: localhost:2727
+# Old Primary: localhost:2717 (Secondary)
+
+## 🔟 Attempt write on Secondary (expected failure)
+mongosh --port 2717
+db.users.insert({ "name": "my name is Ayoub" })
+# Result: MongoBulkWriteError[NotWritablePrimary]: not primary
+
+## 1️⃣1️⃣ Write on Primary
+mongosh --port 2727
+db.random.insertOne({ "name": "My name is Ayoub" })
+# Result: acknowledged: true
+
+## 1️⃣2️⃣ Verify replication on Secondary
+mongosh --port 2717
+use Ayoub
+show collections
+# Collection 'random' should be present
+
+## 1️⃣3️⃣ Check Feature Compatibility Version
+db.system.version.find()
+# Example output: { version: "8.2" }
+
+## 1️⃣4️⃣ Security warnings (non-production mode)
+# Access control not enabled
+# Server bound to localhost
+
+## 1️⃣5️⃣ General Replica Set operations
+# Remove a node
+rs.remove("localhost:2737")
+# Re-add node
+rs.add("localhost:2737")
+# Step down Primary manually
+rs.stepDown()
+# Reconfigure Replica Set
+rs.reconfig(config)
