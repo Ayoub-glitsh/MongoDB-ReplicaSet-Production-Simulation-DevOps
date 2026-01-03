@@ -415,9 +415,25 @@ Read/Write" --> P
 
   
 
-### Technical Explanation
+### 🛠️ Technical Explanation
 
-This production architecture shows a MongoDB Replica Set with three nodes deployed across distinct ports on localhost (simulating separate servers). The Primary node (port 2717) handles all write operations and coordinates replication to both Secondary nodes (ports 2727 and 2737). Secondary nodes can serve read operations to distribute query load. All nodes maintain continuous communication through heartbeats to monitor cluster health and facilitate automatic failover if needed.
+This production architecture illustrates a **MongoDB Replica Set** with **three nodes** deployed on different ports on `localhost` (simulating separate servers).
+
+- **🟢 Primary Node** (`localhost:2717`):  
+  - Handles **all write operations**  
+  - Coordinates **replication** to both Secondary nodes  
+
+- **🔵 Secondary Nodes** (`localhost:2727` & `localhost:2737`):  
+  - Serve **read operations** to distribute query load  
+  - Receive data replicated from the Primary  
+
+- **💓 Heartbeats & Cluster Health**:  
+  - All nodes maintain **continuous communication**  
+  - Enable **automatic failover** if the Primary goes down  
+
+> ✅ This setup simulates a **production-ready MongoDB cluster**, providing **high availability**, **fault tolerance**, and **read scalability**.
+
+
 
   
 
@@ -470,26 +486,32 @@ sequenceDiagram
 ```
 
   
+### 📝 Technical Explanation – Write Flow
 
-### Technical Explanation
+Write operations in a **MongoDB Replica Set** follow a **specific flow** to ensure **data durability** and **performance**:
 
-Write operations follow a specific flow in MongoDB Replica Sets:
+1. **🧑‍💻 Client → Primary**  
+   - The client sends **write operations exclusively** to the **Primary node**  
 
-1. Client sends write operations exclusively to the Primary node
+2. **🗂️ Primary Oplog Logging**  
+   - Primary writes the operation to its **Oplog** (operations log)  
+   - The Oplog is a **capped collection** that tracks all data changes  
 
-2. Primary writes the operation to its Oplog (operations log), a capped collection that tracks all data changes
+3. **✅ Primary Acknowledgment**  
+   - Primary immediately **acknowledges the write** to the client  
+   - Default **write concern** ensures confirmation without waiting for secondaries  
 
-3. Primary immediately acknowledges the write to the client (default write concern)
+4. **🔄 Replication to Secondaries**  
+   - Primary **asynchronously replicates** Oplog entries to all Secondary nodes  
 
-4. Asynchronously, the Primary replicates Oplog entries to all Secondary nodes
+5. **📥 Secondary Application**  
+   - Each Secondary **applies operations in the same order** as the Primary  
 
-5. Each Secondary applies the operations in the same order as the Primary
+6. **📤 Replication Acknowledgment**  
+   - Secondaries **acknowledge replication completion** back to the Primary  
 
-6. Secondaries acknowledge replication completion back to the Primary
+> ⚡ This flow ensures **durable writes** while maintaining **high performance** through **asynchronous replication**.
 
-  
-
-This flow ensures data durability while maintaining write performance through asynchronous replication.
 
   
 
