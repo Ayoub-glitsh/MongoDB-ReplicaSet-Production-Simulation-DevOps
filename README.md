@@ -123,33 +123,15 @@ Executed command:
 
 ### 🔍 Result
 
-Element
+| Element            | Value          |
+| ------------------ | -------------- |
+| Total nodes        | 3              |
+| Primary            | localhost:2717 |
+| Secondary          | localhost:2727 |
+| Secondary          | localhost:2737 |
+| votingMembersCount | 3              |
+| writeMajorityCount | 2              |
 
-Value
-
-Total nodes
-
-3
-
-Primary
-
-localhost:2717
-
-Secondary
-
-localhost:2727
-
-Secondary
-
-localhost:2737
-
-votingMembersCount
-
-3
-
-writeMajorityCount
-
-2
 
 ✅ The cluster is now **highly available**
 
