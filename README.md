@@ -489,24 +489,24 @@ sequenceDiagram
 ### 📝 Technical Explanation – Write Flow
 
 Write operations in a **MongoDB Replica Set** follow a **specific flow** to ensure **data durability** and **performance**:
-
+---
 1. **🧑‍💻 Client → Primary**  
    - The client sends **write operations exclusively** to the **Primary node**  
-
+---
 2. **🗂️ Primary Oplog Logging**  
    - Primary writes the operation to its **Oplog** (operations log)  
    - The Oplog is a **capped collection** that tracks all data changes  
-
+---
 3. **✅ Primary Acknowledgment**  
    - Primary immediately **acknowledges the write** to the client  
    - Default **write concern** ensures confirmation without waiting for secondaries  
-
+---
 4. **🔄 Replication to Secondaries**  
    - Primary **asynchronously replicates** Oplog entries to all Secondary nodes  
-
+---
 5. **📥 Secondary Application**  
    - Each Secondary **applies operations in the same order** as the Primary  
-
+---
 6. **📤 Replication Acknowledgment**  
    - Secondaries **acknowledge replication completion** back to the Primary  
 
@@ -586,15 +586,15 @@ No Heartbeat Response]
   
 
 ### 🛠️ Technical Explanation – Automatic Failover
-
+---
 MongoDB implements **automatic failover** through the **Raft consensus algorithm**, ensuring high availability:
 
 1. **💓 Heartbeat Monitoring**  
    - All nodes exchange **heartbeats every 2 seconds** to monitor cluster health  
-
+---
 2. **⚠️ Failure Detection**  
    - If **Secondaries** don't receive a heartbeat from the **Primary** within **10 seconds**, they initiate an **election**  
-
+---
 3. **🏁 Election Process**  
    - **Eligible Secondaries** (priority > 0, not hidden, up-to-date oplog) campaign to become **Primary**  
    - Nodes **vote** based on election criteria:  
@@ -602,11 +602,11 @@ MongoDB implements **automatic failover** through the **Raft consensus algorithm
      - Data freshness  
      - Network connectivity  
    - Candidate requires **majority vote** (`n/2 + 1`) to be elected  
-
+---
 4. **🌟 New Primary**  
    - The **elected node transitions to Primary**  
    - Resumes **replication** to remaining Secondaries  
-
+---
 5. **🔄 Old Primary Recovery**  
    - When a **failed node recovers**, it rejoins as a **Secondary**  
    - Syncs **missing data** to catch up with the current Primary  
@@ -694,6 +694,7 @@ Replicated Copy]
 
 ### 🔄 Technical Explanation – Data Replication in MongoDB
 
+---
 MongoDB uses a **pull-based replication model** via the **Oplog** to ensure data consistency across Replica Set nodes.
 ---
 
