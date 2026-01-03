@@ -449,7 +449,7 @@ Just tell me 🔥
 
   
 
-\`\`\`mermaid
+```mermaid
 
 graph TB
 
@@ -518,7 +518,7 @@ Read/Write" --> P
 
     class DP,DS1,DS2 storage
 
-\`\`\`
+```
 
   
 
