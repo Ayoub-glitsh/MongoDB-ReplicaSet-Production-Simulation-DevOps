@@ -1,5 +1,6 @@
-# 🖼️ MongoDB Replica Set Simulation – Galerie Uniforme
 
+📘 Documentation – MongoDB Replica Set Setup Simulation (Production-Oriented)
+=============================================================================
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
 
 <!-- Ligne 1 -->
@@ -28,8 +29,6 @@
 
 
 
-📘 Documentation – MongoDB Replica Set Setup Simulation (Production-Oriented)
-=============================================================================
 
 Replica Set Name: `myReplicaSet`
 --------------------------------
@@ -42,13 +41,9 @@ Replica Set Name: `myReplicaSet`
 The objective of this simulation is to **set up and operate a MongoDB Replica Set cluster** in a production-like environment in order to:
 
 *   Understand the roles of **Primary** and **Secondary** nodes
-    
-*   Observe **automatic elections**
-    
+*   Observe **automatic elections**  
 *   Test **data replication**
-    
 *   Verify **write restrictions**
-    
 *   Diagnose **real-world production errors**
     
 
