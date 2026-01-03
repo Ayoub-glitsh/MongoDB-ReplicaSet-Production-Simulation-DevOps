@@ -49,32 +49,19 @@ The objective of this simulation is to **set up and operate a MongoDB Replica Se
 
 * * *
 
-2️⃣ Environment Used
---------------------
 
-Component
+## 2️⃣ Environment Used
 
-Value
+| Element             | Value               |
+| ------------------- | ----------------- |
+| OS                  | Windows           |
+| MongoDB             | 8.2.1             |
+| mongosh             | 2.5.8             |
+| Deployment Type     | Local (simulation)|
+| Mode                | Replica Set       |
 
-OS
 
-Windows
 
-MongoDB
-
-8.2.1
-
-mongosh
-
-2.5.8
-
-Deployment Type
-
-Local (simulation)
-
-Mode
-
-Replica Set
 
 * * *
 
@@ -89,9 +76,7 @@ Connection to MongoDB server on port **2717**:
 Result:
 
 *   Successful connection
-    
 *   Node is **Primary**
-    
 *   Active Replica Set: `myReplicaSet`
     
 
@@ -104,18 +89,13 @@ Executed command:
 
     rs.status()
     
-
 ### 🔍 Observation
 
 *   `votingMembersCount: 1`
-    
 *   `stateStr: PRIMARY`
-    
 *   Only one active node
-    
 *   No fault tolerance yet
     
-
 👉 The Replica Set is operational but **not redundant**
 
 * * *
