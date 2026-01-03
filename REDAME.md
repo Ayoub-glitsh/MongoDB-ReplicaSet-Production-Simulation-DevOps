@@ -441,11 +441,11 @@ Just tell me 🔥
 
 ==============================================================
 
-\# MongoDB Replica Set Production Architecture
+# MongoDB Replica Set Production Architecture
 
   
 
-\## 1️⃣ Production Architecture Overview
+## 1️⃣ Production Architecture Overview
 
   
 
@@ -455,33 +455,33 @@ graph TB
 
     subgraph "Application Layer"
 
-        App\[Client Application\]
+        App[Client Application]
 
     end
 
     subgraph "MongoDB Replica Set: myReplicaSet"
 
-        P\[Primary Node
-localhost:2717\]
+        P[Primary Node
+localhost:2717]
 
-        S1\[Secondary Node 1
-localhost:2727\]
+        S1[Secondary Node 1
+localhost:2727]
 
-        S2\[Secondary Node 2
-localhost:2737\]
+        S2[Secondary Node 2
+localhost:2737]
 
     end
 
     subgraph "Data Storage"
 
-        DP\[(Primary Data
-Oplog)\]
+        DP[(Primary Data
+Oplog)]
 
-        DS1\[(Secondary Data 1
-Replicated)\]
+        DS1[(Secondary Data 1
+Replicated)]
 
-        DS2\[(Secondary Data 2
-Replicated)\]
+        DS2[(Secondary Data 2
+Replicated)]
 
     end
 
@@ -522,17 +522,17 @@ Read/Write" --> P
 
   
 
-\### Technical Explanation
+### Technical Explanation
 
 This production architecture shows a MongoDB Replica Set with three nodes deployed across distinct ports on localhost (simulating separate servers). The Primary node (port 2717) handles all write operations and coordinates replication to both Secondary nodes (ports 2727 and 2737). Secondary nodes can serve read operations to distribute query load. All nodes maintain continuous communication through heartbeats to monitor cluster health and facilitate automatic failover if needed.
 
   
 
-\## 2️⃣ Write Operation Flow
+## 2️⃣ Write Operation Flow
 
   
 
-\`\`\`mermaid
+```mermaid
 
 sequenceDiagram
 
@@ -574,25 +574,25 @@ sequenceDiagram
 
     Note over P,S2: Eventual Consistency: Secondaries catch up
 
-\`\`\`
+```
 
   
 
-\### Technical Explanation
+### Technical Explanation
 
 Write operations follow a specific flow in MongoDB Replica Sets:
 
-1\. Client sends write operations exclusively to the Primary node
+1. Client sends write operations exclusively to the Primary node
 
-2\. Primary writes the operation to its Oplog (operations log), a capped collection that tracks all data changes
+2. Primary writes the operation to its Oplog (operations log), a capped collection that tracks all data changes
 
-3\. Primary immediately acknowledges the write to the client (default write concern)
+3. Primary immediately acknowledges the write to the client (default write concern)
 
-4\. Asynchronously, the Primary replicates Oplog entries to all Secondary nodes
+4. Asynchronously, the Primary replicates Oplog entries to all Secondary nodes
 
-5\. Each Secondary applies the operations in the same order as the Primary
+5. Each Secondary applies the operations in the same order as the Primary
 
-6\. Secondaries acknowledge replication completion back to the Primary
+6. Secondaries acknowledge replication completion back to the Primary
 
   
 
@@ -600,24 +600,24 @@ This flow ensures data durability while maintaining write performance through as
 
   
 
-\## 3️⃣ Automatic Failover & Election Process
+## 3️⃣ Automatic Failover & Election Process
 
   
 
-\`\`\`mermaid
+```mermaid
 
 stateDiagram-v2
 
-    \[\*\] --> NormalOperation: Replica Set Initialized
+    [*] --> NormalOperation: Replica Set Initialized
 
     state NormalOperation {
 
-        P\[Primary Node
-2717\] --> S1\[Secondary Node 1
-2727\]: Heartbeats
+        P[Primary Node
+2717] --> S1[Secondary Node 1
+2727]: Heartbeats
 
-        P --> S2\[Secondary Node 2
-2737\]: Heartbeats
+        P --> S2[Secondary Node 2
+2737]: Heartbeats
 
         S1 --> S2: Heartbeats
 
@@ -627,8 +627,8 @@ stateDiagram-v2
 
     state PrimaryFailure {
 
-        F\[Primary Failed
-No Heartbeat Response\]
+        F[Primary Failed
+No Heartbeat Response]
 
         S1 --> S2: Election Initiation
 
@@ -654,31 +654,31 @@ No Heartbeat Response\]
 
     state NewPrimary {
 
-        NP\[New Primary
-2727 Elected\] --> S2\[Secondary
-2737\]: Replication Resumes
+        NP[New Primary
+2727 Elected] --> S2[Secondary
+2737]: Replication Resumes
 
-        NP --> OF\[Old Primary
-2717\]: Marked as Secondary
+        NP --> OF[Old Primary
+2717]: Marked as Secondary
 (When Recovered)
 
     }
 
-    NewPrimary --> \[\*\]: Stable State Achieved
+    NewPrimary --> [*]: Stable State Achieved
 
-\`\`\`
+```
 
   
 
-\### Technical Explanation
+### Technical Explanation
 
 MongoDB implements automatic failover through the Raft consensus algorithm:
 
-1\. \*\*Heartbeat Monitoring\*\*: All nodes exchange heartbeats every 2 seconds
+1. **Heartbeat Monitoring**: All nodes exchange heartbeats every 2 seconds
 
-2\. \*\*Failure Detection\*\*: If secondaries don't receive heartbeat from primary within 10 seconds, they initiate election
+2. **Failure Detection**: If secondaries don't receive heartbeat from primary within 10 seconds, they initiate election
 
-3\. \*\*Election Process\*\*:
+3. **Election Process**:
 
    - Eligible secondaries (priority > 0, not hidden, up-to-date oplog) campaign to become primary
 
@@ -686,17 +686,17 @@ MongoDB implements automatic failover through the Raft consensus algorithm:
 
    - Candidate needs majority vote (n/2 + 1) to become primary
 
-4\. \*\*New Primary\*\*: Elected node transitions to primary, resumes replication to remaining secondaries
+4. **New Primary**: Elected node transitions to primary, resumes replication to remaining secondaries
 
-5\. \*\*Old Primary Recovery\*\*: When failed node recovers, it rejoins as secondary and syncs missing data
-
-  
-
-\## 4️⃣ Data Replication Synchronization
+5. **Old Primary Recovery**: When failed node recovers, it rejoins as secondary and syncs missing data
 
   
 
-\`\`\`mermaid
+## 4️⃣ Data Replication Synchronization
+
+  
+
+```mermaid
 
 flowchart TD
 
@@ -704,11 +704,11 @@ flowchart TD
 
         direction LR
 
-        P1\[Application Data
-Collections\]
+        P1[Application Data
+Collections]
 
-        P2\[Oplog
-Capped Collection\]
+        P2[Oplog
+Capped Collection]
 
         P1 -- "All Write Operations" --> P2
 
@@ -718,16 +718,16 @@ Capped Collection\]
 
         direction LR
 
-        S1\_1\[Sync Source
-Primary's Oplog\]
+        S1_1[Sync Source
+Primary's Oplog]
 
-        S1\_2\[Data Apply
-Replay Operations\]
+        S1_2[Data Apply
+Replay Operations]
 
-        S1\_3\[Local Data
-Replicated Copy\]
+        S1_3[Local Data
+Replicated Copy]
 
-        S1\_1 --> S1\_2 --> S1\_3
+        S1_1 --> S1_2 --> S1_3
 
     end
 
@@ -735,46 +735,46 @@ Replicated Copy\]
 
         direction LR
 
-        S2\_1\[Sync Source
-Primary's Oplog\]
+        S2_1[Sync Source
+Primary's Oplog]
 
-        S2\_2\[Data Apply
-Replay Operations\]
+        S2_2[Data Apply
+Replay Operations]
 
-        S2\_3\[Local Data
-Replicated Copy\]
+        S2_3[Local Data
+Replicated Copy]
 
-        S2\_1 --> S2\_2 --> S2\_3
+        S2_1 --> S2_2 --> S2_3
 
     end
 
     P2 -- "1. Oplog Entries Streamed
-(tailable cursor)" --> S1\_1
+(tailable cursor)" --> S1_1
 
     P2 -- "1. Oplog Entries Streamed
-(tailable cursor)" --> S2\_1
+(tailable cursor)" --> S2_1
 
-    S1\_2 -- "2. Apply in Original Order
-(idempotent operations)" --> S1\_3
+    S1_2 -- "2. Apply in Original Order
+(idempotent operations)" --> S1_3
 
-    S2\_2 -- "2. Apply in Original Order
-(idempotent operations)" --> S2\_3
+    S2_2 -- "2. Apply in Original Order
+(idempotent operations)" --> S2_3
 
-    S1\_1 -- "3. Heartbeat & Status Report" --> P2
+    S1_1 -- "3. Heartbeat & Status Report" --> P2
 
-    S2\_1 -- "3. Heartbeat & Status Report" --> P2
+    S2_1 -- "3. Heartbeat & Status Report" --> P2
 
-\`\`\`
+```
 
   
 
-\### Technical Explanation
+### Technical Explanation
 
 Data replication in MongoDB uses a pull-based model through the Oplog:
 
-1\. \*\*Oplog Structure\*\*: Capped collection storing idempotent operations (insert, update, delete) with timestamps
+1. **Oplog Structure**: Capped collection storing idempotent operations (insert, update, delete) with timestamps
 
-2\. \*\*Replication Process\*\*:
+2. **Replication Process**:
 
    - Secondaries maintain a tailable cursor on the Primary's Oplog
 
@@ -782,29 +782,29 @@ Data replication in MongoDB uses a pull-based model through the Oplog:
 
    - Each Secondary applies operations in the same order as the Primary
 
-3\. \*\*Initial Sync\*\*: New nodes perform full data copy + Oplog application
+3. **Initial Sync**: New nodes perform full data copy + Oplog application
 
-4\. \*\*Consistency Guarantees\*\*: Write concern options (w: 1, w: majority, w: all) control when writes are confirmed
+4. **Consistency Guarantees**: Write concern options (w: 1, w: majority, w: all) control when writes are confirmed
 
-5\. \*\*Lag Monitoring\*\*: \`replSetGetStatus\` shows replication lag; optimal production should maintain < 50ms lag
-
-  
-
-\## Production Best Practices Summary
+5. **Lag Monitoring**: `replSetGetStatus` shows replication lag; optimal production should maintain < 50ms lag
 
   
 
-\*\*For your 3-node Replica Set:\*\*
+## Production Best Practices Summary
 
-\- \*\*Write Concerns\*\*: Use \`w: "majority"\` for critical data to ensure durability
+  
 
-\- \*\*Read Preferences\*\*: Default \`primary\` for strong consistency; \`secondaryPreferred\` for read scaling
+**For your 3-node Replica Set:**
 
-\- \*\*Connection String\*\*: \`mongodb://localhost:2717,localhost:2727,localhost:2737/?replicaSet=myReplicaSet\`
+- **Write Concerns**: Use `w: "majority"` for critical data to ensure durability
 
-\- \*\*Monitoring\*\*: Track replication lag, election counts, and member states
+- **Read Preferences**: Default `primary` for strong consistency; `secondaryPreferred` for read scaling
 
-\- \*\*Backup\*\*: Always backup from a Secondary to avoid Primary performance impact
+- **Connection String**: `mongodb://localhost:2717,localhost:2727,localhost:2737/?replicaSet=myReplicaSet`
+
+- **Monitoring**: Track replication lag, election counts, and member states
+
+- **Backup**: Always backup from a Secondary to avoid Primary performance impact
 
   
 
