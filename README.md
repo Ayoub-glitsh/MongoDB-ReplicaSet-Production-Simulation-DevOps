@@ -1,3 +1,30 @@
+# 🖼️ MongoDB Replica Set Simulation – Galerie 12 Images
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+
+<!-- Ligne 1 -->
+<img src="img/replicaSet_01.png"  width="300" />
+<img src="img/replicaSet_02.png" width="250" />
+<img src="img/replicaSet_03.png" width="280" />
+<img src="img/replicaSet_04.png" width="320" />
+
+<!-- Ligne 2 -->
+<img src="img/replicaSet_05.png" width="260" />
+<img src="img/replicaSet_06.png" width="300" />
+<img src="img/replicaSet_07.png" width="240" />
+<img src="img/replicaSet_08.png" width="280" />
+
+<!-- Ligne 3 -->
+<img src="img/replicaSet_09.png" width="300" />
+<img src="img/replicaSet_10.png" width="260" />
+<img src="img/replicaSet_11.png" width="270" />
+<img src="img/replicaSet_12.png" width="250" />
+
+</div>
+
+
+
+
 
 
 📘 Documentation – MongoDB Replica Set Setup Simulation (Production-Oriented)
