@@ -1,23 +1,4 @@
-Here is the **full professional English version**, faithful to your real commands and written as **production-oriented technical documentation** 👇  
-You can copy–paste it directly.
 
-* * *
-
-**Excellent work 👍**  
-Based **exactly on the commands you executed**, here is a **professional documentation fully aligned with your real workflow**, written as a **technical project documentation / production simulation report**.
-
-You can use it **as-is** in:
-
-*   a `README.md`
-    
-*   an **ISTA / OFPPT** report
-    
-*   a DevOps / MongoDB documentation
-    
-*   a GitHub portfolio
-    
-
-* * *
 
 📘 Documentation – MongoDB Replica Set Setup Simulation (Production-Oriented)
 =============================================================================
