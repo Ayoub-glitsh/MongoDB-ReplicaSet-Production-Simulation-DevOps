@@ -1,26 +1,27 @@
-# 🖼️ MongoDB Replica Set Simulation – Galerie 12 Images
+# 🖼️ MongoDB Replica Set Simulation – Galerie Uniforme
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
 
 <!-- Ligne 1 -->
-<img src="img/replicaSet_01.png"  width="300" />
-<img src="img/replicaSet_02.png" width="250" />
-<img src="img/replicaSet_03.png" width="280" />
-<img src="img/replicaSet_04.png" width="320" />
+<img src="img/replicaSet_01.png" alt="Replica Set 1" width="200" height="150" />
+<img src="img/replicaSet_02.png" alt="Mongo Shell 1" width="200" height="150" />
+<img src="img/replicaSet_03.png" alt="Election 1" width="200" height="150" />
+<img src="img/replicaSet_04.png" alt="Replication 1" width="200" height="150" />
 
 <!-- Ligne 2 -->
-<img src="img/replicaSet_05.png" width="260" />
-<img src="img/replicaSet_06.png" width="300" />
-<img src="img/replicaSet_07.png" width="240" />
-<img src="img/replicatSet_08.png" width="280" />
+<img src="img/replicaSet_05.png" alt="Error 1" width="200" height="150" />
+<img src="img/replicaSet_06.png" alt="Replica Set 2" width="200" height="150" />
+<img src="img/replicaSet_07.png" alt="Mongo Shell 2" width="200" height="150" />
+<img src="img/replicatSet_08.png" alt="Election 2" width="200" height="150" />
 
 <!-- Ligne 3 -->
-<img src="img/replicaSet_09.png" width="300" />
-<img src="img/replicaSet_10.png" width="260" />
-<img src="img/replicaSet_11.png" width="270" />
-<img src="img/replicaSet_12.png" width="250" />
+<img src="img/replicaSet_09.png" alt="Replication 2" width="200" height="150" />
+<img src="img/replicaSet_10.png" alt="Error 2" width="200" height="150" />
+<img src="img/replicaSet_11.png" alt="Replica Set 3" width="200" height="150" />
+<img src="img/replicaSet_12.png" alt="Mongo Shell 3" width="200" height="150" />
 
 </div>
+
 
 
 
