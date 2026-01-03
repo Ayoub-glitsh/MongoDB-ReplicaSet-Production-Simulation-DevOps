@@ -418,19 +418,19 @@ Read/Write" --> P
 ### 🛠️ Technical Explanation
 
 This production architecture illustrates a **MongoDB Replica Set** with **three nodes** deployed on different ports on `localhost` (simulating separate servers).
-
+---
 - **🟢 Primary Node** (`localhost:2717`):  
   - Handles **all write operations**  
   - Coordinates **replication** to both Secondary nodes  
-
+---
 - **🔵 Secondary Nodes** (`localhost:2727` & `localhost:2737`):  
   - Serve **read operations** to distribute query load  
   - Receive data replicated from the Primary  
-
+---
 - **💓 Heartbeats & Cluster Health**:  
   - All nodes maintain **continuous communication**  
   - Enable **automatic failover** if the Primary goes down  
-
+---
 > ✅ This setup simulates a **production-ready MongoDB cluster**, providing **high availability**, **fault tolerance**, and **read scalability**.
 
 
