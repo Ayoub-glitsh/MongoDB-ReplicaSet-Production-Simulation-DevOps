@@ -12,7 +12,7 @@
 <img src="img/replicaSet_05.png" width="260" />
 <img src="img/replicaSet_06.png" width="300" />
 <img src="img/replicaSet_07.png" width="240" />
-<img src="img/replicaSet_08.png" width="280" />
+<img src="img/replicatSet_08.png" width="280" />
 
 <!-- Ligne 3 -->
 <img src="img/replicaSet_09.png" width="300" />
